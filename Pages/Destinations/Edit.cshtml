@@ -31,6 +31,12 @@
             </div>
 
             <div class="form-group">
+                <label asp-for="Destination.EntryDate" class="control-label"></label>
+                <input asp-for="Destination.EntryDate" class="form-control" />
+                <span asp-validation-for="Destination.EntryDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
                 <label asp-for="Destination.CityID" class="control-label">City Name</label>
                 <select asp-for="Destination.CityID" class="form-control" asp-items="ViewBag.CityID">
                 </select>
