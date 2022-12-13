@@ -17,5 +17,7 @@ namespace Proiect_Web_Onetiu_Malan.Data
         public DbSet<Proiect_Web_Onetiu_Malan.Models.Destination> Destination { get; set; } = default!;
 
         public DbSet<Proiect_Web_Onetiu_Malan.Models.City> City { get; set; }
+
+        public DbSet<Proiect_Web_Onetiu_Malan.Models.Category> Category { get; set; }
     }
 }

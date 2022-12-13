@@ -18,5 +18,6 @@ namespace Proiect_Web_Onetiu_Malan.Models
         public DateTime EntryDate { get; set; }
         public int? CityID { get; set; }
         public City? City { get; set; }
+        public ICollection<DestinationCategory>? DestinationCategories { get; set; }
     }
 }
