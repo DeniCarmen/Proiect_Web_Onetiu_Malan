@@ -1,12 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Proiect_Web_Onetiu_Malan.Data;
+using Microsoft.AspNetCore.Identity;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<Proiect_Web_Onetiu_MalanContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Proiect_Web_Onetiu_MalanContext") ?? throw new InvalidOperationException("Connection string 'Proiect_Web_Onetiu_MalanContext' not found.")));
+builder.Services.AddDbContext<AgencyIdentityContext>(options =>options.UseSqlServer(builder.Configuration.GetConnectionString("Proiect_Web_Onetiu_MalanContext") ?? throw new InvalidOperationException("Connectionstring 'Proiect_Web_Onetiu_MalanContext' not found.")));
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<AgencyIdentityContext>();
 
 var app = builder.Build();
 
@@ -22,6 +27,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();;
 
 app.UseAuthorization();
 

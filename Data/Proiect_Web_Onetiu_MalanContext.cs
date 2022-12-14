@@ -19,5 +19,11 @@ namespace Proiect_Web_Onetiu_Malan.Data
         public DbSet<Proiect_Web_Onetiu_Malan.Models.City> City { get; set; }
 
         public DbSet<Proiect_Web_Onetiu_Malan.Models.Category> Category { get; set; }
+
+        public DbSet<Proiect_Web_Onetiu_Malan.Models.Country> Country { get; set; }
+
+        public DbSet<Proiect_Web_Onetiu_Malan.Models.Client> Client { get; set; }
+
+        public DbSet<Proiect_Web_Onetiu_Malan.Models.Reservation> Reservation { get; set; }
     }
 }

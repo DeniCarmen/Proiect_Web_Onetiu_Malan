@@ -17,7 +17,7 @@ namespace Proiect_Web_Onetiu_Malan.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.10")
+                .HasAnnotation("ProductVersion", "6.0.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -56,6 +56,52 @@ namespace Proiect_Web_Onetiu_Malan.Migrations
                     b.ToTable("City");
                 });
 
+            modelBuilder.Entity("Proiect_Web_Onetiu_Malan.Models.Client", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<string>("Adress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Client");
+                });
+
+            modelBuilder.Entity("Proiect_Web_Onetiu_Malan.Models.Country", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Country");
+                });
+
             modelBuilder.Entity("Proiect_Web_Onetiu_Malan.Models.Destination", b =>
                 {
                     b.Property<int>("ID")
@@ -71,6 +117,9 @@ namespace Proiect_Web_Onetiu_Malan.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("CountryID")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("EntryDate")
                         .HasColumnType("datetime2");
 
@@ -84,6 +133,8 @@ namespace Proiect_Web_Onetiu_Malan.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("CityID");
+
+                    b.HasIndex("CountryID");
 
                     b.ToTable("Destination");
                 });
@@ -111,11 +162,41 @@ namespace Proiect_Web_Onetiu_Malan.Migrations
                     b.ToTable("DestinationCategory");
                 });
 
+            modelBuilder.Entity("Proiect_Web_Onetiu_Malan.Models.Reservation", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<int?>("ClientID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DestinationID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ClientID");
+
+                    b.HasIndex("DestinationID");
+
+                    b.ToTable("Reservation");
+                });
+
             modelBuilder.Entity("Proiect_Web_Onetiu_Malan.Models.Destination", b =>
                 {
                     b.HasOne("Proiect_Web_Onetiu_Malan.Models.City", "City")
                         .WithMany("Destinations")
                         .HasForeignKey("CityID");
+
+                    b.HasOne("Proiect_Web_Onetiu_Malan.Models.Country", null)
+                        .WithMany("Destinations")
+                        .HasForeignKey("CountryID");
 
                     b.Navigation("City");
                 });
@@ -139,12 +220,37 @@ namespace Proiect_Web_Onetiu_Malan.Migrations
                     b.Navigation("Destination");
                 });
 
+            modelBuilder.Entity("Proiect_Web_Onetiu_Malan.Models.Reservation", b =>
+                {
+                    b.HasOne("Proiect_Web_Onetiu_Malan.Models.Client", "Client")
+                        .WithMany("Reservations")
+                        .HasForeignKey("ClientID");
+
+                    b.HasOne("Proiect_Web_Onetiu_Malan.Models.Destination", "Destination")
+                        .WithMany()
+                        .HasForeignKey("DestinationID");
+
+                    b.Navigation("Client");
+
+                    b.Navigation("Destination");
+                });
+
             modelBuilder.Entity("Proiect_Web_Onetiu_Malan.Models.Category", b =>
                 {
                     b.Navigation("DestinationCategories");
                 });
 
             modelBuilder.Entity("Proiect_Web_Onetiu_Malan.Models.City", b =>
+                {
+                    b.Navigation("Destinations");
+                });
+
+            modelBuilder.Entity("Proiect_Web_Onetiu_Malan.Models.Client", b =>
+                {
+                    b.Navigation("Reservations");
+                });
+
+            modelBuilder.Entity("Proiect_Web_Onetiu_Malan.Models.Country", b =>
                 {
                     b.Navigation("Destinations");
                 });

@@ -9,9 +9,11 @@ using Microsoft.EntityFrameworkCore;
 using Proiect_Web_Onetiu_Malan.Data;
 using Proiect_Web_Onetiu_Malan.Models;
 
+
 namespace Proiect_Web_Onetiu_Malan.Pages.Destinations
 {
-    public class EditModel : PageModel
+    public class EditModel : DestinationCategoriesPageModel
+
     {
         private readonly Proiect_Web_Onetiu_Malan.Data.Proiect_Web_Onetiu_MalanContext _context;
 
@@ -30,11 +32,19 @@ namespace Proiect_Web_Onetiu_Malan.Pages.Destinations
                 return NotFound();
             }
 
+            Destination = await _context.Destination
+                .Include(d => d.City)
+                .Include(d => d.DestinationCategories).ThenInclude(d => d.Category)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.ID == id);
+
             var destination =  await _context.Destination.FirstOrDefaultAsync(m => m.ID == id);
             if (destination == null)
             {
                 return NotFound();
             }
+
+            PopulateAssignedCategoryData(_context, Destination);
             Destination = destination;
 
             ViewData["CityID"] = new SelectList(_context.Set<City>(), "ID", "CityName");
@@ -43,7 +53,7 @@ namespace Proiect_Web_Onetiu_Malan.Pages.Destinations
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        /*public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
@@ -74,6 +84,40 @@ namespace Proiect_Web_Onetiu_Malan.Pages.Destinations
         private bool DestinationExists(int id)
         {
           return _context.Destination.Any(e => e.ID == id);
+        }
+    }*/
+        public async Task<IActionResult> OnPostAsync(int? id, string[] selectedCategories)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            //se va include Author conform cu sarcina de la lab 2
+            var destinationToUpdate = await _context.Destination
+            .Include(i => i.City)
+            .Include(i => i.DestinationCategories)
+            .ThenInclude(i => i.Category)
+            .FirstOrDefaultAsync(s => s.ID == id);
+            if (destinationToUpdate == null)
+            {
+                return NotFound();
+            }
+            //se va modifica AuthorID conform cu sarcina de la lab 2
+            if (await TryUpdateModelAsync<Destination>(
+            destinationToUpdate,
+            "Destination",
+            i => i.Title, i => i.Country,
+            i => i.Price, i => i.EntryDate, i => i.CityID))
+            {
+                UpdateBookCategories(_context, selectedCategories, destinationToUpdate);
+                await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
+            }
+            //Apelam UpdateBookCategories pentru a aplica informatiile din checkboxuri la entitatea Books care
+            //este editata
+            UpdateBookCategories(_context, selectedCategories, destinationToUpdate);
+            PopulateAssignedCategoryData(_context, destinationToUpdate);
+            return Page();
         }
     }
 }
