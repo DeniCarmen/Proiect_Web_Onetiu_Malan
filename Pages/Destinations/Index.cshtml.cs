@@ -36,6 +36,7 @@ namespace Proiect_Web_Onetiu_Malan.Pages.Destinations
 
             DestinationD.Destinations = await _context.Destination
             .Include(d => d.City)
+            .Include(d => d.Country)
             .Include(d => d.DestinationCategories)
             .ThenInclude(d => d.Category)
             .AsNoTracking()

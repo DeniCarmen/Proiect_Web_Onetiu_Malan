@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
@@ -6,12 +6,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;*/
 using Proiect_Web_Onetiu_Malan.Data;
 using Proiect_Web_Onetiu_Malan.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Security.Policy;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace Proiect_Web_Onetiu_Malan.Pages.Destinations
 {
+    //[Authorize(Roles = "Admin")]
     public class CreateModel : DestinationCategoriesPageModel
     {
         private readonly Proiect_Web_Onetiu_Malan.Data.Proiect_Web_Onetiu_MalanContext _context;

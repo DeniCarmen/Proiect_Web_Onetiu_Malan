@@ -24,11 +24,13 @@
     <thead>
         <tr>
             <th>
-                <a asp-page="./Index" asp-route-sortOrder="@Model.TitleSort">
+                 <a asp-page="./Index" asp-route-sortOrder="@Model.TitleSort">
 
                     @Html.DisplayNameFor(model => model.Destination[0].Title)
-                </a>
-            </th>
+                 </a> 
+
+
+             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Destination[0].Country)
             </th>
@@ -59,9 +61,9 @@
             }
             <tr class="@selectedRow">
                 
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Country)
             </td>

@@ -11,11 +11,16 @@ namespace Proiect_Web_Onetiu_Malan.Models
         public int ID { get; set; }
         [Display(Name = "Destination Name")]
         public string Title { get; set; }
-        public string Country { get; set; }
+        //public string Title { get; set; }
+        //public string Country { get; set; }
         [Column(TypeName = "decimal(6, 2)")]
+        [Range(0.01, 500)]
         public decimal Price { get; set; }
         [DataType(DataType.Date)]
         public DateTime EntryDate { get; set; }
+
+        public int? CountryID { get; set; }
+        public Country? Country { get; set; }
         public int? CityID { get; set; }
         public City? City { get; set; }
         public ICollection<DestinationCategory>? DestinationCategories { get; set; }

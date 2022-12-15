@@ -39,8 +39,7 @@ namespace Proiect_Web_Onetiu_Malan.Areas.Identity.Pages.Account
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            Proiect_Web_Onetiu_Malan.Data.Proiect_Web_Onetiu_MalanContext context
-            )
+            Proiect_Web_Onetiu_Malan.Data.Proiect_Web_Onetiu_MalanContext context)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -117,18 +116,22 @@ namespace Proiect_Web_Onetiu_Malan.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+           // {
                 var user = CreateUser();
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
+                Client.Email=Input.Email;
+                _context.Client.Add(Client);
+                await _context.SaveChangesAsync();
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-
+                    var role = await _userManager.AddToRoleAsync(user, "User");
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
@@ -155,7 +158,7 @@ namespace Proiect_Web_Onetiu_Malan.Areas.Identity.Pages.Account
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
-            }
+            //}
 
             // If we got this far, something failed, redisplay form
             return Page();

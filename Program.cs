@@ -3,14 +3,25 @@ using Microsoft.Extensions.DependencyInjection;
 using Proiect_Web_Onetiu_Malan.Data;
 using Microsoft.AspNetCore.Identity;
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminPolicy", policy =>
+   policy.RequireRole("Admin"));
+});
 // Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages(options =>
+{
+    options.Conventions.AuthorizeFolder("/Destinations");
+    options.Conventions.AllowAnonymousToPage("/Destinations/Index");
+    options.Conventions.AllowAnonymousToPage("/Destinations/Details");
+    options.Conventions.AuthorizeFolder("/Members", "AdminPolicy");
+});
 builder.Services.AddDbContext<Proiect_Web_Onetiu_MalanContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Proiect_Web_Onetiu_MalanContext") ?? throw new InvalidOperationException("Connection string 'Proiect_Web_Onetiu_MalanContext' not found.")));
 builder.Services.AddDbContext<AgencyIdentityContext>(options =>options.UseSqlServer(builder.Configuration.GetConnectionString("Proiect_Web_Onetiu_MalanContext") ?? throw new InvalidOperationException("Connectionstring 'Proiect_Web_Onetiu_MalanContext' not found.")));
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AgencyIdentityContext>();
 
 var app = builder.Build();

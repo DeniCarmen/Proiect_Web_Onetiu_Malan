@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,6 +14,7 @@ using Proiect_Web_Onetiu_Malan.Models;
 
 namespace Proiect_Web_Onetiu_Malan.Pages.Destinations
 {
+    //[Authorize(Roles = "Admin")]
     public class EditModel : DestinationCategoriesPageModel
 
     {
@@ -33,6 +36,7 @@ namespace Proiect_Web_Onetiu_Malan.Pages.Destinations
             }
 
             Destination = await _context.Destination
+                .Include(d => d.Country)
                 .Include(d => d.City)
                 .Include(d => d.DestinationCategories).ThenInclude(d => d.Category)
                 .AsNoTracking()
@@ -47,6 +51,8 @@ namespace Proiect_Web_Onetiu_Malan.Pages.Destinations
             PopulateAssignedCategoryData(_context, Destination);
             Destination = destination;
 
+
+            ViewData["CountryID"] = new SelectList(_context.Set<Country>(), "ID", "CountryName");
             ViewData["CityID"] = new SelectList(_context.Set<City>(), "ID", "CityName");
             return Page();
         }
@@ -94,6 +100,7 @@ namespace Proiect_Web_Onetiu_Malan.Pages.Destinations
             }
             //se va include Author conform cu sarcina de la lab 2
             var destinationToUpdate = await _context.Destination
+            .Include(i => i.Country)
             .Include(i => i.City)
             .Include(i => i.DestinationCategories)
             .ThenInclude(i => i.Category)
