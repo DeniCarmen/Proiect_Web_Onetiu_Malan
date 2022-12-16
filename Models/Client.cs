@@ -11,9 +11,12 @@ namespace Proiect_Web_Onetiu_Malan.Models
         //[RegularExpression(@"^[A-Z]+[a-z\s]*$")]
         [StringLength(30, MinimumLength = 3)]
 
+        [Display(Name = "First Name")]
         public string? FirstName { get; set; }
         [RegularExpression(@"^[A-Z]+[a-z\s]*$")]
         [StringLength(30, MinimumLength = 3)]
+
+        [Display(Name = "Last Name")]
         public string? LastName { get; set; }
         [StringLength(70)]
 

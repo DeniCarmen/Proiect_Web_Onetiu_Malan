@@ -28,7 +28,9 @@ namespace Proiect_Web_Onetiu_Malan.Pages.Destinations
                 return NotFound();
             }
 
-            var destination = await _context.Destination.FirstOrDefaultAsync(m => m.ID == id);
+            var destination = await _context.Destination.Include(d=>d.Country)
+                                                        .Include(d =>d.City)
+                                                        .FirstOrDefaultAsync(m => m.ID == id);
             if (destination == null)
             {
                 return NotFound();
@@ -41,3 +43,13 @@ namespace Proiect_Web_Onetiu_Malan.Pages.Destinations
         }
     }
 }
+/* var book = await _context.Book.Include(b=>b.Author).FirstOrDefaultAsync(m => m.ID == id);
+            if (book == null)
+            {
+                return NotFound();
+            }
+            else 
+            {
+                Book = book;
+            }
+            return Page();*/

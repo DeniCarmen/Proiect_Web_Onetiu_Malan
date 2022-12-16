@@ -21,7 +21,13 @@
             @Html.DisplayNameFor(model => model.Destination.Country)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Destination.Country)
+            @Html.DisplayFor(model => model.Destination.Country.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Destination.City)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Destination.City.CityName)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Destination.Price)

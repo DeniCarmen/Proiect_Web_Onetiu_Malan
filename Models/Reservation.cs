@@ -11,6 +11,10 @@ namespace Proiect_Web_Onetiu_Malan.Models
         public int? DestinationID { get; set; }
         public Destination? Destination { get; set; }
         [DataType(DataType.Date)]
+
+        [Display(Name = "Start Date")]
         public DateTime StartDate { get; set; }
+
+       
     }
 }

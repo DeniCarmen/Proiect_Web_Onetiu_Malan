@@ -28,7 +28,9 @@ namespace Proiect_Web_Onetiu_Malan.Pages.Reservations
                 return NotFound();
             }
 
-            var reservation = await _context.Reservation.FirstOrDefaultAsync(m => m.ID == id);
+            var reservation = await _context.Reservation.Include(d=>d.Client)
+                                                        .Include(d=>d.Destination)
+                                                        .FirstOrDefaultAsync(m => m.ID == id);
             if (reservation == null)
             {
                 return NotFound();

@@ -32,6 +32,7 @@ namespace Proiect_Web_Onetiu_Malan.Pages.Destinations
             DestinationD = new DestinationData();
             TitleSort = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
             CitySort = String.IsNullOrEmpty(sortOrder) ? "city_desc" : "";
+
             CurrentFilter = searchString;
 
             DestinationD.Destinations = await _context.Destination
@@ -42,12 +43,14 @@ namespace Proiect_Web_Onetiu_Malan.Pages.Destinations
             .AsNoTracking()
             .OrderBy(d => d.Title)
             .ToListAsync();
+
             if (!String.IsNullOrEmpty(searchString))
             {
                 DestinationD.Destinations = DestinationD.Destinations.Where(s => s.City.CityName.Contains(searchString)
 
                || s.City.CityName.Contains(searchString)
                || s.Title.Contains(searchString));
+
                 if (id != null)
                 {
                     DestinationID = id.Value;
@@ -61,7 +64,7 @@ namespace Proiect_Web_Onetiu_Malan.Pages.Destinations
                         DestinationD.Destinations = DestinationD.Destinations.OrderByDescending(s =>
                        s.Title);
                         break;
-                    case "author_desc":
+                    case "city_desc":
                         DestinationD.Destinations = DestinationD.Destinations.OrderByDescending(s =>
                        s.City.CityName);
                         break;
@@ -78,5 +81,5 @@ namespace Proiect_Web_Onetiu_Malan.Pages.Destinations
                 }
             }*/
         }
-    }
+    } 
 }
