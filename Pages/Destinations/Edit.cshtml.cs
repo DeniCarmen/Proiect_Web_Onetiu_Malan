@@ -113,7 +113,7 @@ namespace Proiect_Web_Onetiu_Malan.Pages.Destinations
             if (await TryUpdateModelAsync<Destination>(
             destinationToUpdate,
             "Destination",
-            i => i.Title, i => i.Country,
+            i => i.Title, i => i.CountryID,
             i => i.Price, i => i.EntryDate, i => i.CityID))
             {
                 UpdateBookCategories(_context, selectedCategories, destinationToUpdate);
