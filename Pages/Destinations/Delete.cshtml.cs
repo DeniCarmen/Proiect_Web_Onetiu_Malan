@@ -12,7 +12,7 @@ using Proiect_Web_Onetiu_Malan.Models;
 
 namespace Proiect_Web_Onetiu_Malan.Pages.Destinations
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class DeleteModel : PageModel
     {
         private readonly Proiect_Web_Onetiu_Malan.Data.Proiect_Web_Onetiu_MalanContext _context;

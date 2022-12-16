@@ -9,9 +9,11 @@ namespace Proiect_Web_Onetiu_Malan.Models
     public class Destination
     {
         public int ID { get; set; }
+
+
         [Display(Name = "Destination Name")]
-        public string Title { get; set; }
-        //public string Title { get; set; }
+        public string? Title { get; set; }
+       
         //public string Country { get; set; }
         [Column(TypeName = "decimal(6, 2)")]
         [Range(0.01, 500)]

@@ -14,7 +14,7 @@ using Proiect_Web_Onetiu_Malan.Models;
 
 namespace Proiect_Web_Onetiu_Malan.Pages.Destinations
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class EditModel : DestinationCategoriesPageModel
 
     {
@@ -52,7 +52,7 @@ namespace Proiect_Web_Onetiu_Malan.Pages.Destinations
             Destination = destination;
 
 
-            ViewData["CountryID"] = new SelectList(_context.Set<Country>(), "ID", "CountryName");
+            ViewData["CountryID"] = new SelectList(_context.Set<Country>(), "ID", "Name");
             ViewData["CityID"] = new SelectList(_context.Set<City>(), "ID", "CityName");
             return Page();
         }
