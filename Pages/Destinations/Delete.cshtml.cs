@@ -32,7 +32,8 @@ namespace Proiect_Web_Onetiu_Malan.Pages.Destinations
                 return NotFound();
             }
 
-            var destination = await _context.Destination.FirstOrDefaultAsync(m => m.ID == id);
+            var destination = await _context.Destination.Include(d => d.Country)
+                                                        .FirstOrDefaultAsync(m => m.ID == id);
 
             if (destination == null)
             {
@@ -52,6 +53,7 @@ namespace Proiect_Web_Onetiu_Malan.Pages.Destinations
                 return NotFound();
             }
             var destination = await _context.Destination.FindAsync(id);
+                                                        
 
             if (destination != null)
             {

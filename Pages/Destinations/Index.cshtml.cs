@@ -48,8 +48,9 @@ namespace Proiect_Web_Onetiu_Malan.Pages.Destinations
             {
                 DestinationD.Destinations = DestinationD.Destinations.Where(s => s.City.CityName.Contains(searchString)
 
-               || s.City.CityName.Contains(searchString)
+               || s.Country.Name.Contains(searchString)
                || s.Title.Contains(searchString));
+          
 
                 if (id != null)
                 {
@@ -58,6 +59,7 @@ namespace Proiect_Web_Onetiu_Malan.Pages.Destinations
                     .Where(i => i.ID == id.Value).Single();
                     DestinationD.Categories = destination.DestinationCategories.Select(s => s.Category);
                 }
+            }
                 switch (sortOrder)
                 {
                     case "title_desc":
@@ -69,7 +71,7 @@ namespace Proiect_Web_Onetiu_Malan.Pages.Destinations
                        s.City.CityName);
                         break;
                 }
-            }
+            
 
             /*public async Task OnGetAsync()
             {
